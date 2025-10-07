@@ -1,0 +1,3 @@
+# .gitignore
+    /estore/node_modules/
+    /estore-server-nodeJS/node_modules/

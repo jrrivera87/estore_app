@@ -1,0 +1,40 @@
+<div class="header bg-dark">
+    <div class="row">
+        <div class="brand my-1">
+            <h1>estore</h1>
+        </div>
+        <div class="p-0 my-4 w-50 h-25 bg-white">
+            @if(displaySearch) {
+                <select #categoryOptions class="dropdown p-0 m-0">
+                @for (category of categoryStore.topLevelCategories$ | async; track $index) {
+                    <option value="{{category.id}}">{{category.category}}</option>
+                }
+                </select>
+                <input #keyword class="form-control search-box" placeholder="Search..."/>
+                <button class="search-button" (click)="onClickSearch(keyword.value, categoryOptions.value)">
+                    <fa-icon [icon]="faSearch"></fa-icon>
+                </button>
+            }
+            
+        </div>
+        <div class="login-container p-0">
+            <fa-icon class="user-icon" [icon]="faUserCircle"></fa-icon>
+            <h5><a href="#">Sign in</a></h5> / <h5><a href="#">Register</a></h5>
+        </div>
+        <div class="cart-wishlist p-0 list-item"
+        (click)="navigateToCart()">
+            <button type="button" class="btn btn-dark position-relative">
+                <fa-icon [icon]="faShoppingCart"></fa-icon>
+                @if(cartStore.cart$ | async; as cart) {
+                    <ng-container>
+                        @if (cart.totalProducts > 0) {
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning text-dark">
+                                {{cart.totalProducts}}
+                            </span>
+                        }
+                    </ng-container>
+                }
+            </button>
+        </div>
+    </div>
+</div>

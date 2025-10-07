@@ -1,0 +1,33 @@
+<div class="main-product-container">
+    @for (product of productsStore.products$ | async; track $index) {
+        <div class="mx-5 p-3 product-card">
+            <div class="product-image-container">
+                <a routerLink="../product/{{product.id}}">
+                    <img [src]="'/images/' + product.product_img" alt="">
+                </a>
+            </div>
+            <div class="product-info">
+                <h5>
+                    <a routerLink="../product/{{product.id}}">{{product.product_name}}</a>
+                </h5>
+                <p class="product-price">{{product.price | currency}}</p>
+                <div><app-ratings [score]='product.ratings'></app-ratings></div>
+                <div class="my-3" (click)="addToCart(product)">
+                    <div class="cart-button">
+                        <div class="cart-icon-container">
+                            <fa-icon [icon]="faShoppingCart"></fa-icon>
+                        </div>
+                        <div class="cart-text-container mx-3">
+                            <p>Add to Cart</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    @if (!productsStore.products.length) {
+        <div>
+            No products found
+        </div>
+    }
+</div>
