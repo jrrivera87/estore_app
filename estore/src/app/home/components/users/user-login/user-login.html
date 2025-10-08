@@ -1,0 +1,39 @@
+<div class="container">
+    <form [formGroup]="userLoginForm" (ngSubmit)="onSubmit()">
+        <div class="form-group form-group-margin">
+            <label for="email">Email*</label>
+            <input type="text" class="form-control" id="email" formControlName="email"/>
+            @if (email?.touched && email?.errors?.["required"]){ 
+                <span class="text-danger">
+                    Email is required
+                </span>
+            }
+
+            @if (email?.touched && email?.errors?.["email"]){ 
+                <span class="text-danger">
+                    Enter valid email address
+                </span>
+            }
+        </div>
+
+        <div class="form-group form-group-margin">
+            <label for="password">Password*</label>
+            <input type="password" class="form-control" id="password" formControlName="password"/>
+            @if (password?.touched && password?.errors?.["required"]){ 
+                <span class="text-danger">
+                    Password is required
+                </span>
+            }
+        </div>
+
+        <div class="text-center form-group-margin">
+            <button type="submit" class="btn btn-warning" [disabled]="!userLoginForm.valid">
+                Sign In
+            </button>
+        </div>
+
+        <div class="text-center form-group-margin">
+            Not a member? <a routerLink="../signup">Register</a>
+        </div>
+    </form>
+</div>

@@ -76,6 +76,7 @@ users.post('/login', (req,res) => {
 
                             res.status(200).send({
                                 token: token,
+                                expiresInSeconds: 3600
                             });
                         } else {
                             res.status(401).send({

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms'
 import { matchPasswords } from './validators/match-passwords.validator';
-import { UserService } from '../services/user-service';
+import { UserService } from '../../../services/users/user-service';
 import { user } from '../../../types/user.type';
 import { NgClass } from '@angular/common';
 
