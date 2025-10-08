@@ -4,7 +4,8 @@ import { Header } from './components/header/header';
 import { CategoriesStoreItem } from './services/category/categories.storeItem';
 import { ProductsStoreItem } from './services/product/products.storeItem';
 import { SearchKeyword } from './types/searchKeyword.type';
-import { RouterOutlet } from '@angular/router';
+import { RouterOutlet, NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -13,9 +14,19 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './home.scss'
 })
 export class Home {
-  constructor(private categoriesStoreItem: CategoriesStoreItem, private productsStoreItem: ProductsStoreItem) {
-    this.categoriesStoreItem.loadCategories();
-    this.productsStoreItem.loadProducts();
+  constructor(
+    private categoriesStoreItem: CategoriesStoreItem, 
+    private productsStoreItem: ProductsStoreItem,
+    private router: Router) {
+      this.categoriesStoreItem.loadCategories();
+      this.productsStoreItem.loadProducts();
+      router.events.pipe(
+        filter(event => event instanceof NavigationEnd))
+        .subscribe(event => {
+          if((event as NavigationEnd).url === '/home') {
+            router.navigate(['/home/products']);
+          }
+        });
   }
 
   onSelectCategory(categoryId: number): void {

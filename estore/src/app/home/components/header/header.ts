@@ -4,14 +4,13 @@ import { faSearch, faUserCircle, faShoppingCart } from '@fortawesome/free-solid-
 import { CategoriesStoreItem } from '../../services/category/categories.storeItem';
 import { AsyncPipe } from '@angular/common';
 import { SearchKeyword } from '../../types/searchKeyword.type';
-import { NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { filter } from 'rxjs';
 import { CartStoreItem } from '../../services/cart/cart.storeItem';
 
-
 @Component({
   selector: 'app-header',
-  imports: [ FontAwesomeModule, AsyncPipe ],
+  imports: [FontAwesomeModule, AsyncPipe, RouterLink],
   templateUrl: './header.html',
   styleUrl: './header.scss'
 })

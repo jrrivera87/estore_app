@@ -23,7 +23,10 @@ products.get('/', (req, res) => {
 
     pool.query(query, (error, products) => {
         if (error) {
-            res.status(500).send(error);
+            res.status(500).send({
+                error: error.code,
+                message: error.message,
+            });
         } else {
             res.status(200).send(products);
         }
@@ -34,7 +37,10 @@ products.get('/:id', (req, res) => {
     let id = req.params.id;
     pool.query('select * from products where id = ' + id, (error, products) => {
         if (error) {
-            res.status(500).send(error);
+            res.status(500).send({
+                error: error.code,
+                message: error.message,
+            });
         } else {
             res.status(200).send(products);
         }

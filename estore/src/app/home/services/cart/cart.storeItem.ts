@@ -9,16 +9,17 @@ import { Injectable } from "@angular/core";
 })
 export class CartStoreItem extends StoreItem<Cart> {
     constructor() {
-        const storedCart: any = sessionStorage.getItem('cart');
-        if (storedCart) {
-            super(JSON.parse(storedCart))
-        } else {
+        if (typeof window !== 'undefined' && window.sessionStorage) {}
+        // const storedCart: any = sessionStorage?.getItem('cart');
+        // if (storedCart) {
+        //     super(JSON.parse(storedCart))
+        // } else {
                 super({
                     products: [],
                     totalAmount: 0,
                     totalProducts: 0,
             })
-        }
+        // }
     }
 
     get cart$(): Observable<Cart> {

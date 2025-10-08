@@ -6,6 +6,7 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
 import { CategoryService } from './home/services/category/category-service';
 import { ProductsService } from './home/services/product/products-service';
 import { CartStoreItem } from './home/services/cart/cart.storeItem';
+import { UserService } from './home/components/users/services/user-service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -16,6 +17,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withFetch()),
     CategoryService,
     ProductsService,
-    CartStoreItem
+    CartStoreItem,
+    UserService
   ]
 };

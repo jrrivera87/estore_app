@@ -4,20 +4,18 @@ import { ActivatedRoute } from '@angular/router';
 import { Product } from '../../types/products.type';
 import { Subscription } from 'rxjs';
 import { ProductsService } from '../../services/product/products-service';
-import { AsyncPipe, CurrencyPipe } from '@angular/common';
+import { CurrencyPipe } from '@angular/common';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { CartStoreItem } from '../../services/cart/cart.storeItem';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
   selector: 'app-productdetails',
-  imports: [Ratings, CurrencyPipe, FontAwesomeModule, AsyncPipe],
+  imports: [Ratings, CurrencyPipe, FontAwesomeModule],
   templateUrl: './productdetails.html',
   styleUrl: './productdetails.scss'
 })
-export class Productdetails implements 
-OnInit, 
-OnDestroy {
+export class Productdetails implements OnInit, OnDestroy {
   product: Product;
   subscriptions: Subscription = new Subscription;
   faShoppingCart = faShoppingCart;
