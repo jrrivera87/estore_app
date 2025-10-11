@@ -5,13 +5,15 @@ const users = require('./routes/users');
 const cors = require('cors');
 const app = express();
 const PORT = 5001;
-const bodyparser = require('body-parser')
+const bodyparser = require('body-parser');
+const orders = require('./routes/orders');
 
 app.use(cors());
 app.use(bodyparser.json());
 app.use('/productCategories', productCategories);
 app.use('/products', products);
-app.use('/users', users)
+app.use('/users', users);
+app.use('/orders', orders);
 
 const server = app.listen(PORT, () =>
     console.log('App is running on the port - ' + PORT)

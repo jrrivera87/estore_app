@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container form-container">
     <form [formGroup]="userLoginForm" (ngSubmit)="onSubmit()">
         <div class="form-group form-group-margin">
             <label for="email">Email*</label>
@@ -35,5 +35,11 @@
         <div class="text-center form-group-margin">
             Not a member? <a routerLink="../signup">Register</a>
         </div>
+
+        @if (alertMessage !== '') {
+            <div class="alert" [ngClass]="alertType === 0? 'alert-succes' : 'alert-danger'">
+                {{alertMessage}}
+            </div>
+        }
     </form>
 </div>

@@ -55,7 +55,7 @@ export class UserSignup implements OnInit{
   onSubmit(): void {
     const user: user = {
       firstName: this.firstName?.value,
-      lastName: this.userSignupForm.get('lastname')?.value,
+      lastName: this.userSignupForm.get('lastName')?.value,
       address: this.userSignupForm.get('address')?.value,
       city: this.userSignupForm.get('city')?.value,
       state: this.userSignupForm.get('state')?.value,
