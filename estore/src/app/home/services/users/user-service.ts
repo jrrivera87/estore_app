@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { loginToken, user, loggedInUser } from '../../types/user.type';
+import { StorageService } from '../storage/storage-service';
 
 @Injectable()
 export class UserService {
@@ -10,9 +11,8 @@ export class UserService {
   private isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject(false);
   private loggedInUserInfo: BehaviorSubject<loggedInUser> = new BehaviorSubject(<loggedInUser>{})
   
-  constructor(private httpClient: HttpClient) {
-    // TODO: figure out how to save localstorage and SessionStorage.
-    // this.loadToken();
+  constructor(private httpClient: HttpClient, private sessionStorageService: StorageService) {
+    this.loadToken();
   }
 
   get isUserAuthenticated(): boolean {
@@ -48,15 +48,15 @@ export class UserService {
   activateToken(token: loginToken): void {
     // For testing purposes set to 10 seconds.
     // token.expiresInSeconds = 10;
-    localStorage.setItem('token', token.token);
-    localStorage.setItem('expiry', new Date(Date.now() + token.expiresInSeconds * 1000).toISOString());
-    localStorage.setItem('firstName', token.user.firstName);
-    localStorage.setItem('lastName', token.user.lastName);
-    localStorage.setItem('address', token.user.address);
-    localStorage.setItem('city', token.user.city);
-    localStorage.setItem('state', token.user.state);
-    localStorage.setItem('pin', token.user.pin);
-    localStorage.setItem('email', token.user.email);
+    this.sessionStorageService.setItem('token', token.token);
+    this.sessionStorageService.setItem('expiry', new Date(Date.now() + token.expiresInSeconds * 1000).toISOString());
+    this.sessionStorageService.setItem('firstName', token.user.firstName);
+    this.sessionStorageService.setItem('lastName', token.user.lastName);
+    this.sessionStorageService.setItem('address', token.user.address);
+    this.sessionStorageService.setItem('city', token.user.city);
+    this.sessionStorageService.setItem('state', token.user.state);
+    this.sessionStorageService.setItem('pin', token.user.pin);
+    this.sessionStorageService.setItem('email', token.user.email);
 
     this.isAuthenticated.next(true);
     this.loggedInUserInfo.next(token.user);
@@ -65,7 +65,7 @@ export class UserService {
   }
 
   logout(): void {
-    localStorage.clear();
+    this.sessionStorageService.clear();
     this.isAuthenticated.next(false);
     this.loggedInUserInfo.next(<loggedInUser> {});
     clearTimeout(this.autoLogoutTimer);
@@ -78,21 +78,21 @@ export class UserService {
   }
 
   loadToken(): void {
-    const token: string | null = localStorage.getItem('token');
-    const expiry: string | null = localStorage.getItem('expiry');
+    const token: string | null = this.sessionStorageService.getItem('token');
+    const expiry: string | null = this.sessionStorageService.getItem('expiry');
 
     if(!token || !expiry) {
       return;
     } else {
       const expiresIn: number = new Date(expiry).getTime() - new Date().getTime();
       if (expiresIn > 0) {
-        const firstName: string | null = localStorage.getItem('firstName');
-        const lastName: string | null = localStorage.getItem('lastName');
-        const address: string | null = localStorage.getItem('address');
-        const city: string | null = localStorage.getItem('city');
-        const state: string | null = localStorage.getItem('state');
-        const pin: string | null = localStorage.getItem('pin');
-        const email: string | null = localStorage.getItem('email');
+        const firstName: string | null = this.sessionStorageService.getItem('firstName');
+        const lastName: string | null = this.sessionStorageService.getItem('lastName');
+        const address: string | null = this.sessionStorageService.getItem('address');
+        const city: string | null = this.sessionStorageService.getItem('city');
+        const state: string | null = this.sessionStorageService.getItem('state');
+        const pin: string | null = this.sessionStorageService.getItem('pin');
+        const email: string | null = this.sessionStorageService.getItem('email');
 
         const user: loggedInUser = {
           firstName: firstName !== null ? firstName : '',

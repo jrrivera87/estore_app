@@ -3,23 +3,24 @@ import { StoreItem } from "../../../shared/storeItem";
 import { Cart, CartItem } from "../../types/cart.type";
 import { Product } from "../../types/products.type";
 import { Injectable } from "@angular/core";
+import { StorageService } from "../storage/storage-service";
+import { json } from "stream/consumers";
 
 @Injectable ({
     providedIn: 'root',
 })
 export class CartStoreItem extends StoreItem<Cart> {
-    constructor() {
-        if (typeof window !== 'undefined' && window.sessionStorage) {}
-        // const storedCart: any = sessionStorage?.getItem('cart');
-        // if (storedCart) {
-        //     super(JSON.parse(storedCart))
-        // } else {
-                super({
-                    products: [],
-                    totalAmount: 0,
-                    totalProducts: 0,
+    constructor(private sessionStorageService: StorageService) {
+        super(
+            {
+                products: [],
+                totalAmount: 0,
+                totalProducts: 0,
             })
-        // }
+        const storedCart: any = sessionStorageService.getItem('cart');
+        if (storedCart) {
+            this.setValue(JSON.parse(storedCart))
+        } 
     }
 
     get cart$(): Observable<Cart> {
@@ -60,7 +61,7 @@ export class CartStoreItem extends StoreItem<Cart> {
         this.cart.totalProducts -= cartItem.quantity;
         this.cart.totalAmount -= cartItem.amount;
         if(this.cart.totalProducts === 0) {
-            sessionStorage.clear();
+            this.sessionStorageService.removeItem('cart');
         } else {
             this.saveCart()
         }
@@ -83,12 +84,12 @@ export class CartStoreItem extends StoreItem<Cart> {
     }
 
     saveCart(): void {
-       sessionStorage.clear();
-       sessionStorage.setItem('cart', JSON.stringify(this.cart));
+       this.sessionStorageService.removeItem('cart');
+       this.sessionStorageService.setItem('cart', JSON.stringify(this.cart));
     }
 
     clearCart(): void {
-        sessionStorage.clear();
+        this.sessionStorageService.removeItem('cart');
         this.cart.products = [];
         this.cart.totalAmount = 0;
         this.cart.totalProducts = 0;
