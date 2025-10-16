@@ -9,7 +9,6 @@ import { filter } from 'rxjs';
 import { CartStoreItem } from '../../services/cart/cart.storeItem';
 import { UserService } from '../../services/users/user-service';
 import { Subscription } from 'rxjs';
-import { unsubscribe } from 'diagnostics_channel';
 
 @Component({
   selector: 'app-header',

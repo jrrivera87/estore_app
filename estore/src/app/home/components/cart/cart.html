@@ -6,7 +6,7 @@
             <span style="font-weight:500">Continue Shopping</span>
         </div>
         @if (alertMessage !== '') {
-            <div class="alert" [ngClass]="alertType ===0 ? 'alert-sucess' : 'alert-danger'">
+            <div class="alert" [ngClass]="alertType === 0 ? 'alert-sucess' : 'alert-danger'">
                 {{ alertMessage }}
             </div>
         }
